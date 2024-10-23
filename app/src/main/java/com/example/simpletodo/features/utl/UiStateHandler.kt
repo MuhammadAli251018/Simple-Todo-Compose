@@ -6,5 +6,4 @@ interface UiState
 
 interface UiStateHandler<State: UiState> {
     val state: StateFlow<State>
-    fun updateState(block: State.() -> State)
 }
