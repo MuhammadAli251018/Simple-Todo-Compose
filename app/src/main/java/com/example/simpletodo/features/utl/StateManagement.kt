@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
+//  Todo: Unit Test
 inline fun <T, R> StateFlow<T>.map(
     coroutineContext: CoroutineContext = EmptyCoroutineContext,
     crossinline transform: T.() -> R
@@ -20,6 +21,7 @@ inline fun <T, R> StateFlow<T>.map(
 
     CoroutineScope(coroutineContext).launch {
         collectLatest { newValue ->
+            //  Only emits new Changes
             val hasChanged = transFlow.value != transform(newValue)
             if (hasChanged)
                 transFlow.emit(transform(newValue))
