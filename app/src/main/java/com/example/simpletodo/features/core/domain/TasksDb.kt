@@ -1,9 +1,11 @@
 package com.example.simpletodo.features.core.domain
 
 import com.example.simpletodo.features.core.domain.entity.Task
+import com.example.simpletodo.features.utl.Result
+
 
 interface TasksDb {
-    class TaskId internal constructor(val id: Int)
+    class TaskId constructor(val id: Long)
     class TaskWithId
         (val id: TaskId, val task: Task)
 
