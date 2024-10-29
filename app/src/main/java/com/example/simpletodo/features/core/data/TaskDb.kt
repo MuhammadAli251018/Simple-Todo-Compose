@@ -6,7 +6,7 @@ import com.example.simpletodo.features.core.domain.entity.Task
 import com.example.simpletodo.features.core.domain.entity.Time
 
 @Entity(tableName = "tasks")
-internal data class TaskDb(
+data class TaskDb(
     @PrimaryKey
     val id: Int,
     val title: String,
@@ -14,17 +14,17 @@ internal data class TaskDb(
     val issueTime: Long,
     val completeTime: Long
 )
-internal const val NOT_COMPLETED = -5L
+const val NOT_COMPLETED = -5L
 
 
-internal fun Task.toTaskDb(id: Int = 0): TaskDb = TaskDb(
+fun Task.toTaskDb(id: Int = 0): TaskDb = TaskDb(
     id = id,
     title = title,
     content = content,
     issueTime = issueTime.value,
     completeTime = if (state is Task.TaskState.Done) state.finishTime.value else NOT_COMPLETED
 )
-internal fun TaskDb.toTask(): Task = Task(
+fun TaskDb.toTask(): Task = Task(
     title = title,
     content = content,
     issueTime = Time(issueTime),

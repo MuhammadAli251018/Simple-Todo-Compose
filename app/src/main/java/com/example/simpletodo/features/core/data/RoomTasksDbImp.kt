@@ -4,7 +4,7 @@ import com.example.simpletodo.features.core.domain.TasksDb
 import com.example.simpletodo.features.core.domain.entity.Task
 import com.example.simpletodo.features.utl.getResult
 
-internal class RoomTasksDbImp(
+class RoomTasksDbImp(
     private val tasksDao: TasksDao
     
 ) : TasksDb {

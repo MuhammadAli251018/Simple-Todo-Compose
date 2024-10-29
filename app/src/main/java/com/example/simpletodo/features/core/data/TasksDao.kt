@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 
 @Dao
-internal interface TasksDao {
+interface TasksDao {
 
     @Insert
     suspend fun insertTask(task: TaskDb): Long
