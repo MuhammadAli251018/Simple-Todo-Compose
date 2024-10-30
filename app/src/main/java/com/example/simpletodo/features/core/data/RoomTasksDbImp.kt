@@ -4,10 +4,7 @@ import com.example.simpletodo.features.core.domain.TasksDb
 import com.example.simpletodo.features.core.domain.entity.Task
 import com.example.simpletodo.features.utl.getResult
 
-class RoomTasksDbImp(
-    private val tasksDao: TasksDao
-    
-) : TasksDb {
+class RoomTasksDbImp(private val tasksDao: TasksDao) : TasksDb {
     override suspend fun insertTask(task: Task) = getResult {
             val id = tasksDao.insertTask(task.toTaskDb())
             TasksDb.TaskId(id)

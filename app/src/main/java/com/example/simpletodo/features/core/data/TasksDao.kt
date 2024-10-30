@@ -1,7 +1,6 @@
 package com.example.simpletodo.features.core.data
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -15,10 +14,10 @@ interface TasksDao {
     @Update
     suspend fun updateTask(task: TaskDb)
 
-    @Delete
+    @Query("DELETE FROM tasks WHERE id = :id")
     suspend fun deleteTask(id: Int)
 
-    @Query("DELETE FROM tasks WHERE id = :id")
+    @Query("SELECT * FROM tasks WHERE id = :id")
     suspend fun getTask(id: Int): TaskDb
 
     @Query("SELECT * FROM tasks")
