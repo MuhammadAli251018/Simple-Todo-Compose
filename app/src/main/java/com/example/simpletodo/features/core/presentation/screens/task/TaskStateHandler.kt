@@ -6,13 +6,13 @@ import com.example.simpletodo.features.utl.UiStateHandler
 data class TaskState(
     val title: String,
     val content: String,
-    val state: String,
+    val state: Boolean,
     val issueTime: String
 ) : UiState
 
 interface TaskStateHandler : UiStateHandler<TaskState> {
     fun onTitleChange(newTitle: String)
     fun onContentChange(newContent: String)
-    fun onStateChange(newState: String)
+    fun onStateChange(newState: Boolean)
     fun onSaveButton()
 }

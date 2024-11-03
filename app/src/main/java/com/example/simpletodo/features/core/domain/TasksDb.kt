@@ -6,8 +6,7 @@ import com.example.simpletodo.features.utl.Result
 
 interface TasksDb {
     class TaskId constructor(val id: Long)
-    class TaskWithId
-        (val id: TaskId, val task: Task)
+    class TaskWithId(val id: TaskId, val task: Task)
 
     suspend fun insertTask(task: Task): Result<TaskId>
     suspend fun updateTask(id: TaskId, newTask: Task): Result<Unit>

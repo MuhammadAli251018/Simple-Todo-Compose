@@ -1,11 +1,17 @@
 package com.example.simpletodo.features.core.presentation.screens.task
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -15,7 +21,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.simpletodo.features.utl.collectPropertyAsState
+import com.example.simpletodo.features.utl.ui.VerticalSpacer
 
 @Composable
 fun TaskScreen(
@@ -41,35 +54,91 @@ fun TaskScreen(
 fun TaskScreen(
     title: String,
     content: String,
-    state: String,
+    state: Boolean,
     onTitleChange: (newTitle: String) -> Unit,
     onContentChange: (newContent: String) -> Unit,
-    onStateChange: (newState: String) -> Unit,
+    onStateChange: (newState: Boolean) -> Unit,
     onSaveButton: () -> Unit
 ) {
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxSize()
+        .fillMaxSize()
     ) {
-        //  Task Title TaskField
-        TextField(
-            value = title,
-            onValueChange = onTitleChange
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            //  Task Title TaskField And Task State
+            VerticalSpacer(15.dp)
 
-        //  Task Content TaskField
-        TextField(
-            value = content,
-            onValueChange = onContentChange
-        )
+            Box (
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+
+                Checkbox(
+                    modifier = Modifier.align(Alignment.CenterStart),
+                    checked = state,
+                    onCheckedChange = onStateChange
+                )
+
+                TextField(
+                    modifier = Modifier.align(Alignment.Center),
+                    value = title,
+                    onValueChange = onTitleChange,
+                    singleLine = true,
+                    colors = TextFieldDefaults.colors(
+                        errorLabelColor = Color.Transparent,
+                        focusedLabelColor = Color.Transparent,
+                        unfocusedLabelColor = Color.Transparent,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    textStyle = TextStyle.Default.copy(
+                        fontSize = 28.sp,
+                        color = TextStyle.Default.color.copy(alpha = .5f),
+                        textDecoration = if (state) TextDecoration.LineThrough else TextDecoration.None
+                    )
+                )
+            }
+
+            //  Task Content TaskField
+            VerticalSpacer(25.dp)
+
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = content,
+                onValueChange = onContentChange,
+                colors = TextFieldDefaults.colors(
+                    errorLabelColor = Color.Transparent,
+                    focusedLabelColor = Color.Transparent,
+                    unfocusedLabelColor = Color.Transparent,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                textStyle = TextStyle.Default.copy(
+                    fontSize = 18.sp,
+                    color = TextStyle.Default.color.copy(alpha = .8f)
+                )
+            )
+
+        }
 
         // Save Task Button
         FloatingActionButton(
+            modifier = Modifier
+                .padding(15.dp)
+                .size(80.dp)
+                .align(alignment = Alignment.BottomEnd),
             shape = CircleShape,
             content = {
                 Icon(
                     painter = painterResource(
-                        id = R.drawable.ic_launcher_foreground
+                        id = R.drawable.ic_done_24
                     ),
                     contentDescription = "Icon"
                 )
@@ -84,7 +153,7 @@ private fun getPreviewStateHandler(): TaskStateHandler {
         private val _state = MutableStateFlow(TaskState(
             title = "Test Title",
             content = "Test Content",
-            state = "Completed",
+            state = true,
             issueTime = "1:15 AM Today"
         ))
         override val state: StateFlow<TaskState> = _state.asStateFlow()
@@ -111,7 +180,7 @@ private fun getPreviewStateHandler(): TaskStateHandler {
             }
         }
 
-        override fun onStateChange(newState: String) {
+        override fun onStateChange(newState: Boolean) {
             updateState {
                 this.copy(
                     state = newState
