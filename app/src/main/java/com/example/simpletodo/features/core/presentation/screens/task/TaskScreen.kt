@@ -33,7 +33,8 @@ import com.example.simpletodo.features.utl.ui.VerticalSpacer
 
 @Composable
 fun TaskScreen(
-    stateHandler: TaskStateHandler
+    stateHandler: TaskStateHandler,
+    toCoreScreen: () -> Unit
 ) {
     val title by stateHandler.state.collectPropertyAsState { title }
     val content by stateHandler.state.collectPropertyAsState { content }
@@ -47,7 +48,8 @@ fun TaskScreen(
         onContentChange = stateHandler::onContentChange,
         onStateChange = stateHandler::onStateChange,
         onSaveButtonClick = stateHandler::onSaveButton,
-        onDeleteButtonClick = stateHandler::onDeleteButtonClick
+        onDeleteButtonClick = stateHandler::onDeleteButtonClick,
+        outOfScreen = toCoreScreen
     )
 }
 
@@ -60,7 +62,8 @@ fun TaskScreen(
     onContentChange: (newContent: String) -> Unit,
     onStateChange: (newState: Boolean) -> Unit,
     onSaveButtonClick: () -> Unit,
-    onDeleteButtonClick: () -> Unit
+    onDeleteButtonClick: () -> Unit,
+    outOfScreen: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -157,7 +160,10 @@ fun TaskScreen(
                     contentDescription = "Icon"
                 )
             },
-            onClick = onSaveButtonClick
+            onClick = {
+                onSaveButtonClick()
+                outOfScreen()
+            }
         )
     }
 }
@@ -212,5 +218,5 @@ private fun getPreviewStateHandler(): TaskStateHandler {
 fun TaskScreenPreview(
 ) {
     val stateHandler = getPreviewStateHandler()
-    TaskScreen(stateHandler)
+    TaskScreen(stateHandler) {}
 }

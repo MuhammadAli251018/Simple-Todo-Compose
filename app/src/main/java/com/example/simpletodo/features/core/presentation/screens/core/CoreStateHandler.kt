@@ -14,5 +14,6 @@ data class CoreScreenState(
 ) : UiState
 
 interface CoreStateHandler : UiStateHandler<CoreScreenState> {
-    
+
+    fun onTaskChange(index: Int, newTask: Task)
 }
