@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -45,11 +46,11 @@ fun TaskScreen(
         onTitleChange = stateHandler::onTitleChange,
         onContentChange = stateHandler::onContentChange,
         onStateChange = stateHandler::onStateChange,
-        onSaveButton = stateHandler::onSaveButton,
+        onSaveButtonClick = stateHandler::onSaveButton,
+        onDeleteButtonClick = stateHandler::onDeleteButtonClick
     )
 }
 
-//Todo: Complete the screen use the state (Complete or not) and it's action
 @Composable
 fun TaskScreen(
     title: String,
@@ -58,7 +59,8 @@ fun TaskScreen(
     onTitleChange: (newTitle: String) -> Unit,
     onContentChange: (newContent: String) -> Unit,
     onStateChange: (newState: Boolean) -> Unit,
-    onSaveButton: () -> Unit
+    onSaveButtonClick: () -> Unit,
+    onDeleteButtonClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -102,6 +104,18 @@ fun TaskScreen(
                         textDecoration = if (state) TextDecoration.LineThrough else TextDecoration.None
                     )
                 )
+
+                IconButton(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 15.dp),
+                    onClick = onDeleteButtonClick
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_delete_24),
+                        contentDescription = "Delete Task"
+                    )
+                }
             }
 
             //  Task Content TaskField
@@ -143,7 +157,7 @@ fun TaskScreen(
                     contentDescription = "Icon"
                 )
             },
-            onClick = onSaveButton
+            onClick = onSaveButtonClick
         )
     }
 }
@@ -189,6 +203,7 @@ private fun getPreviewStateHandler(): TaskStateHandler {
         }
 
         override fun onSaveButton() = Unit
+        override fun onDeleteButtonClick() = Unit
     }
 }
 

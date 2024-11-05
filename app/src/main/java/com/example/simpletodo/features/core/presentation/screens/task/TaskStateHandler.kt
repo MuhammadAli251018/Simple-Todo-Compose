@@ -15,4 +15,5 @@ interface TaskStateHandler : UiStateHandler<TaskState> {
     fun onContentChange(newContent: String)
     fun onStateChange(newState: Boolean)
     fun onSaveButton()
+    fun onDeleteButtonClick()
 }

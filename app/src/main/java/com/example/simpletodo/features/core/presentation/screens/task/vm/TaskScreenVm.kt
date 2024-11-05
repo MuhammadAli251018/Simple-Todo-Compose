@@ -8,21 +8,25 @@ import kotlinx.coroutines.flow.StateFlow
 class TaskScreenVm(taskId: Long) : ViewModel(), TaskStateHandler {
 
     override fun onTitleChange(newTitle: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onContentChange(newContent: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onStateChange(newState: Boolean) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSaveButton() {
-        TODO("Not yet implemented")
+
+    }
+
+    override fun onDeleteButtonClick() {
+
     }
 
     override val state: StateFlow<TaskState>
-        get() = TODO("Not yet implemented")
+        get() = TODO("Nt yet implemented")
 }
