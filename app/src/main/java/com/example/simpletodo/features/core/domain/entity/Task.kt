@@ -11,4 +11,14 @@ data class Task(
         data class Done(val finishTime: Time) : TaskState
         data object Undone : TaskState
     }
+
+    companion object {
+        fun getEmptyTask(title: String = "",
+                         content: String = "",
+                         issueTime: Time = Time(System.currentTimeMillis()),
+                         state: TaskState = TaskState.Undone
+        ) = Task(title = title, content = content, issueTime = issueTime, state = state)
+    }
 }
+
+
