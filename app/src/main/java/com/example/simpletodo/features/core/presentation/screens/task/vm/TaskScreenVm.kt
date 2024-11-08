@@ -8,7 +8,7 @@ import com.example.simpletodo.features.core.domain.entity.Time
 import com.example.simpletodo.features.core.presentation.screens.task.TaskState
 import com.example.simpletodo.features.core.presentation.screens.task.TaskStateHandler
 import com.example.simpletodo.features.core.presentation.screens.task.toTaskState
-import com.example.simpletodo.features.utl.Result
+import com.example.simpletodo.features.utl.result.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

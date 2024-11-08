@@ -1,4 +1,4 @@
-package com.example.simpletodo.features.core.presentation.screens.core
+package com.example.simpletodo.features.core.presentation.screens.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,13 +28,13 @@ import com.example.simpletodo.features.core.presentation.components.Task
 import com.example.simpletodo.features.utl.ui.VerticalSpacer
 
 @Composable
-fun CoreScreen(
-    stateHandler: CoreStateHandler,
+fun MainScreen(
+    stateHandler: MainStateHandler,
     toTaskScreen: (Int?) -> Unit
 ) {
     val state by stateHandler.state.collectAsStateWithLifecycle()
 
-    CoreScreen(
+    MainScreen(
         tasks =state.tasks ,
         onTaskChange = stateHandler::onTaskChange,
         onTaskClicked = {index -> toTaskScreen(index)},
@@ -43,9 +43,9 @@ fun CoreScreen(
 }
 
 @Composable
-fun CoreScreen(
-    tasks: List<Task>,
-    onTaskChange: (Int, Task) -> Unit,
+fun MainScreen(
+    tasks: List<TaskItem>,
+    onTaskChange: (Int, TaskItem) -> Unit,
     onTaskClicked: (Int) -> Unit,
     onNewTaskClick: () -> Unit
 ) {
@@ -103,13 +103,13 @@ fun CoreScreen(
     }
 }
 
-private val previewTask = Task(title = "Test title", contentHint = 100 times "test content hint ", false)
+private val previewTask = TaskItem(title = "Test title", contentHint = 100 times "test content hint ", false)
 
 @Preview
 @Composable
-fun CoreScreenPreview() {
+fun MainScreenPreview() {
     val tasks = 8 times previewTask
-    CoreScreen(tasks, {_, _ ->}, {}) { }
+    MainScreen(tasks, { _, _ ->}, {}) { }
 }
 
 infix fun <E> Int.times(x: E): List<E> = List(this) {x}

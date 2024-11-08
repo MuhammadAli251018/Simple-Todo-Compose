@@ -2,7 +2,7 @@ package com.example.simpletodo.features.core.data
 
 import com.example.simpletodo.features.core.domain.TasksDb
 import com.example.simpletodo.features.core.domain.entity.Task
-import com.example.simpletodo.features.utl.getResult
+import com.example.simpletodo.features.utl.result.getResult
 import kotlinx.coroutines.flow.flow
 
 class RoomTasksDbImp(private val tasksDao: TasksDao) : TasksDb {

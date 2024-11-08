@@ -1,12 +1,12 @@
 package com.example.simpletodo.features.core.domain
 
 import com.example.simpletodo.features.core.domain.entity.Task
-import com.example.simpletodo.features.utl.Result
+import com.example.simpletodo.features.utl.result.Result
 import kotlinx.coroutines.flow.Flow
 
 
 interface TasksDb {
-    class TaskId constructor(val id: Long)
+    class TaskId (val id: Long)
     class TaskWithId(val id: TaskId, val task: Task)
 
     fun insertTask(task: Task): Flow<Result<TaskId>>
