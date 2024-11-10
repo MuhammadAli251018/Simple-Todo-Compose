@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton
@@ -37,7 +38,7 @@ fun MainScreen(
     MainScreen(
         tasks =state.tasks ,
         onTaskChange = stateHandler::onTaskChange,
-        onTaskClicked = {index -> toTaskScreen(index)},
+        onTaskClicked = {id, index -> toTaskScreen(index)},
         onNewTaskClick = {toTaskScreen(null)}
     )
 }
@@ -45,8 +46,8 @@ fun MainScreen(
 @Composable
 fun MainScreen(
     tasks: List<TaskItem>,
-    onTaskChange: (Int, TaskItem) -> Unit,
-    onTaskClicked: (Int) -> Unit,
+    onTaskChange: (Int,Int, TaskItem) -> Unit,
+    onTaskClicked: (id: Int, index: Int) -> Unit,
     onNewTaskClick: () -> Unit
 ) {
     Box(
@@ -68,16 +69,16 @@ fun MainScreen(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(vertical = 15.dp)
             ) {
-                itemsIndexed(tasks) { index, task ->
+                itemsIndexed(items = tasks, key = {_, item -> item.id}) { index, task ->
                     Task(
                         modifier = Modifier.padding(vertical = 5.dp),
                         title = task.title,
                         contentHint = task.contentHint,
                         completed = task.completed,
-                        onClick = { onTaskClicked(index) }
+                        onClick = { onTaskClicked(task.id, index) }
                     )
                     { completed ->
-                        onTaskChange(index, task.copy(completed = completed))
+                        onTaskChange(task.id, index, task.copy(completed = completed))
                     }
                 }
             }
@@ -103,13 +104,13 @@ fun MainScreen(
     }
 }
 
-private val previewTask = TaskItem(title = "Test title", contentHint = 100 times "test content hint ", false)
+private val previewTask = TaskItem(id = 0, title = "Test title", contentHint = 100 times "test content hint ", false)
 
 @Preview
 @Composable
 fun MainScreenPreview() {
     val tasks = 8 times previewTask
-    MainScreen(tasks, { _, _ ->}, {}) { }
+    MainScreen(tasks, {_,_,_ ->}, {_, _ -> }) { }
 }
 
 infix fun <E> Int.times(x: E): List<E> = List(this) {x}

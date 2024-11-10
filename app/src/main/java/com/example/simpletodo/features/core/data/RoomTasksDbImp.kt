@@ -16,19 +16,19 @@ class RoomTasksDbImp(private val tasksDao: TasksDao) : TasksDb {
 
     override fun updateTask(id: TasksDb.TaskId, newTask: Task) = flow{
         emit(getResult {
-            tasksDao.updateTask(newTask.toTaskDb(id = id.id.toInt()))
+            tasksDao.updateTask(newTask.toTaskDb(id = id.value.toInt()))
         })
     }
 
     override fun deleteTask(id: TasksDb.TaskId) = flow{
         emit(getResult {
-            tasksDao.deleteTask(id.id.toInt())
+            tasksDao.deleteTask(id.value.toInt())
         })
     }
 
     override fun getTask(id: TasksDb.TaskId) = flow{
        emit(getResult {
-            tasksDao.getTask(id = id.id.toInt()).toTask()
+            tasksDao.getTask(id = id.value.toInt()).toTask()
         })
     }
 

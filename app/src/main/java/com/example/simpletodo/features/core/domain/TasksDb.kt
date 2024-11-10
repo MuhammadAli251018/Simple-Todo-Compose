@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface TasksDb {
-    class TaskId (val id: Long)
+    class TaskId (val value: Long)
     class TaskWithId(val id: TaskId, val task: Task)
 
     fun insertTask(task: Task): Flow<Result<TaskId>>
