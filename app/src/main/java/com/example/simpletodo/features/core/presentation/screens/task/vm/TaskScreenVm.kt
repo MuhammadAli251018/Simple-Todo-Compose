@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class StartMode {
     data object NewTask : StartMode()
     data class ViewTask(val taskId: Long) : StartMode()
