@@ -43,19 +43,19 @@ class TaskScreenVm(
 
     override fun onTitleChange(newTitle: String) {
         _state.apply {
-            value = value.copy(title = newTitle)
+            this.taskState = this.taskState.copy(title = newTitle)
         }
     }
 
     override fun onContentChange(newContent: String) {
         _state.apply {
-            value = value.copy(content = newContent)
+            this.taskState = this.taskState.copy(content = newContent)
         }
     }
 
     override fun onStateChange(newState: Boolean) {
         _state.apply {
-            value = value.copy(state = newState)
+            this.taskState = this.taskState.copy(taskState = newState)
         }
     }
 
@@ -67,7 +67,7 @@ class TaskScreenVm(
                     title = _state.value.title,
                     content = _state.value.content,
                     // Todo: Make a mapper from state
-                    state = if (_state.value.state) Task.TaskState.Done(Time(value = (initialTask.state as Task.TaskState.Done).finishTime.value)) else Task.TaskState.Undone
+                    state = if (_state.value.taskState) Task.TaskState.Done(Time(value = (initialTask.state as Task.TaskState.Done).finishTime.value)) else Task.TaskState.Undone
                 )
             )
         }
@@ -78,7 +78,7 @@ class TaskScreenVm(
                     title = _state.value.title,
                     content = _state.value.content,
                     // Todo: Make a mapper from Task domain to TaskState
-                    state = if (_state.value.state)
+                    state = if (_state.value.taskState)
                         Task.TaskState.Done(Time(value = (initialTask.state as Task.TaskState.Done).finishTime.value))
                     else Task.TaskState.Undone
                 )

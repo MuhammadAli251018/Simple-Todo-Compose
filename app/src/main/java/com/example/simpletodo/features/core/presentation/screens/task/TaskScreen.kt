@@ -22,28 +22,34 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.simpletodo.features.utl.collectPropertyAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
+import com.example.simpletodo.features.core.presentation.nav.Screen
 import com.example.simpletodo.features.utl.ui.VerticalSpacer
 
 @Composable
 fun TaskScreen(
     stateHandler: TaskStateHandler,
-    toCoreScreen: () -> Unit
 ) {
-    val title by stateHandler.state.collectPropertyAsState { title }
-    val content by stateHandler.state.collectPropertyAsState { content }
-    val state by stateHandler.state.collectPropertyAsState { state }
+    val navController = rememberNavController()
+    val toCoreScreen: () -> Unit = remember {
+        {
+            navController.navigate(Screen.MainScreen)
+        }
+    }
+    val state by stateHandler.state.collectAsStateWithLifecycle()
 
     TaskScreen(
-        title = title,
-        content = content,
-        state = state,
+        title = state.title,
+        content = state.content,
+        state = state.taskState,
         onTitleChange = stateHandler::onTitleChange,
         onContentChange = stateHandler::onContentChange,
         onStateChange = stateHandler::onStateChange,
@@ -173,14 +179,14 @@ private fun getPreviewStateHandler(): TaskStateHandler {
         private val _state = MutableStateFlow(TaskState(
             title = "Test Title",
             content = "Test Content",
-            state = true,
+            taskState = true,
             issueTime = "1:15 AM Today"
         ))
         override val state: StateFlow<TaskState> = _state.asStateFlow()
 
         private fun updateState(block: TaskState.() -> TaskState) {
             _state.apply {
-                value = block(value)
+//                this.taskState = block(this.taskState)
             }
         }
 
@@ -203,7 +209,7 @@ private fun getPreviewStateHandler(): TaskStateHandler {
         override fun onStateChange(newState: Boolean) {
             updateState {
                 this.copy(
-                    state = newState
+                    taskState = newState
                 )
             }
         }
@@ -218,5 +224,5 @@ private fun getPreviewStateHandler(): TaskStateHandler {
 fun TaskScreenPreview(
 ) {
     val stateHandler = getPreviewStateHandler()
-    TaskScreen(stateHandler) {}
+    TaskScreen(stateHandler)
 }
